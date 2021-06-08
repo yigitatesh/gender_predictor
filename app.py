@@ -1,9 +1,11 @@
+# Import Libraries
 import numpy as np
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, flash
 import pickle
 
 # Create Flask app
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # Load Model
 with open("model.pkl", "rb") as f:
@@ -22,7 +24,11 @@ def predict():
     For rendering results on HTML GUI
     '''
     # preprocess given features
-    features = [float(i) for i in request.form.values()]
+    try:
+    	features = [float(i) for i in request.form.values()]
+    except:
+    	flash("Please enter numbers.")
+    	return render_template('index.html')
     features = np.array([features])
 
     # prediction

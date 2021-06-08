@@ -15,7 +15,7 @@
  <div class="login">
 	<h1>Predict Gender using Height and Weight</h1>
 
-     <!-- Main Input For Receiving Query to our ML -->
+     <!-- Input values height and weight -->
     <form action="{{ url_for('predict') }}"method="post">
     	<input type="text" name="height" placeholder="Height(cm)" required="required" />
         <input type="text" name="weight" placeholder="Weight(kg)" required="required" />
@@ -23,10 +23,21 @@
         <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
     </form>
 
-   <br>
-   <br>
-   {{ prediction_text }}
-
+    <br>
+	
+	<!-- Showing Prediction Result -->
+    <br>
+    {{ prediction_text }}
+	
+	<!-- Showing Errors -->
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		{% for message in messages %}
+		  <br>
+		  {{ message }}
+		{% endfor %}
+	  {% endif %}
+	{% endwith %}
  </div>
 
 </body>
